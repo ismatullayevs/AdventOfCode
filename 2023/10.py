@@ -60,7 +60,6 @@ def part_two():
         area += vertices[i][0] * vertices[(i + 1) % len(vertices)][1]
         area -= vertices[i][1] * vertices[(i + 1) % len(vertices)][0]
     area = abs(area) // 2
-    print(area)
     return int(area - steps/2 + 1)
 
 
