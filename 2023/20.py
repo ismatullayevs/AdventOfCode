@@ -58,7 +58,6 @@ def solution(part2):
             
             for dst in dsts:
                 q.append((src, dst, send_level))
-                # print(f'From {src} sent a {"high" if send_level else "low"} level pulse to {dst}')
                 if send_level == 0:
                     low += 1
                 else:
