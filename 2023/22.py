@@ -2,7 +2,7 @@ import sys
 from tqdm import tqdm
 
 
-filename = '/home/coder/aoc/2023/example.txt' if len(sys.argv) == 1 else sys.argv[1]
+filename = 'input.txt' if len(sys.argv) == 1 else sys.argv[1]
 with open(filename, 'r') as file:
     content = file.read()
     lines = content.split('\n')
