@@ -2,7 +2,7 @@ import sys
 from collections import deque
 
 
-filename = '/home/coder/aoc/2023/example.txt' if len(sys.argv) == 1 else sys.argv[1]
+filename = 'input.txt' if len(sys.argv) == 1 else sys.argv[1]
 with open(filename, 'r') as file:
     content = file.read()
     lines = content.split('\n')
@@ -47,4 +47,4 @@ def solution(part2):
 
 
 for part2 in [False, True]:
-    print(solution(part2))
+    print(f"Part {2 if part2 else 1}: {solution(part2)}")
