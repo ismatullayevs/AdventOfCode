@@ -23,7 +23,7 @@ def solve():
         for dx, dy in dirs:
             nx, ny = x+dx, y+dy
             if 0 <= nx < R and 0 <= ny < C and int(mx[nx][ny]) == int(mx[x][y]) + 1:
-                nines = nines.union(dfs(nx, ny))
+                nines |= dfs(nx, ny)
 
         return nines
 
