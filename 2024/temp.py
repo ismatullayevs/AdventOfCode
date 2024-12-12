@@ -1,4 +1,6 @@
 import sys
+import collections
+import functools
 
 filename = 'test.txt' if len(sys.argv) < 2 else 'input.txt'
 
