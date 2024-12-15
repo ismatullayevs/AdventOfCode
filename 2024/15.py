@@ -152,11 +152,11 @@ def solve2():
                 else:
                     continue
 
-        import time
-        time.sleep(.1)
-        import os
-        os.system('clear')
-        print("\n".join("".join(s) for s in mx))
+        # import time
+        # time.sleep(.1)
+        # import os
+        # os.system('clear')
+        # print("\n".join("".join(s) for s in mx))
     
     res = 0
     for i in range(len(mx)):
