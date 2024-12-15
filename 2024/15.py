@@ -98,7 +98,8 @@ def solve2():
                     return False, []
         
         return True, boxes
-    for it, d in enumerate(ds):
+
+    for d in ds:
         if d == '\n': continue
         dr, dc = dirs[d]
         if dr == 0:
@@ -133,17 +134,13 @@ def solve2():
                 else:
                     can_move, boxes = dfs(r+dr, c-1, dr)
                 if can_move:
-                    boxes = collections.deque(set(boxes))
+                    b = []
+                    boxes.reverse()
+                    for box in boxes:
+                        if box not in b:
+                            b.append(box)
+                    boxes = b
                     for br, bc in boxes:
-                        if mx[br+dr][bc] == '#':
-                            break
-                        if mx[br+dr][bc+1] == '#':
-                            break
-                    while boxes:
-                        br, bc = boxes.popleft()
-                        if mx[br+dr][bc] in ['[', ']'] or mx[br+dr][bc+1] in ['[', ']']:
-                            boxes.append((br, bc))
-                            continue
                         mx[br+dr][bc] = mx[br][bc]
                         mx[br+dr][bc+1] = mx[br][bc+1]
                         mx[br][bc] = '.'
@@ -155,11 +152,11 @@ def solve2():
                 else:
                     continue
 
-        # import time
-        # time.sleep(1)
-        # import os
-        # os.system('clear')
-        # print("\n".join("".join(s) for s in mx))
+        import time
+        time.sleep(.1)
+        import os
+        os.system('clear')
+        print("\n".join("".join(s) for s in mx))
     
     res = 0
     for i in range(len(mx)):
@@ -170,5 +167,3 @@ def solve2():
 
 print(f"First part: {solve()}")
 print(f"Second part: {solve2()}")
-
-#.[].
