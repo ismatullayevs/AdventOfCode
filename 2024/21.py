@@ -137,6 +137,9 @@ def solve2():
     with open(filename, 'r') as file:
         codes = [line.strip() for line in file.readlines()]
     
+    res = 0
+    rcount = 25
+
     grid1 = [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3'], [None, '0', 'A']]
     grid2 = [[None, '^', 'A'], ['<', 'v', '>']]
     rdir = {-1: '^', 1: 'v'}
@@ -153,8 +156,71 @@ def solve2():
         for j, col in enumerate(row):
             if col is not None:
                 pos2[str(col)] = (i, j)
+
+    @functools.lru_cache(None)
+    def dfs(f, t, robot, numeric=False):
+        paths = []
+        if numeric:
+            r, c = pos1[f]
+            nr, nc = pos1[t]
+            rd, cd = nr - r, nc - c
+            xr, xc = '', ''
+            if rd != 0:
+                xr = rdir[rd//abs(rd)] * abs(rd)
+            if cd != 0:
+                xc = cdir[cd//abs(cd)] * abs(cd)
+            if xr and xc:
+                if not (c == 0 and nr == 3):
+                    paths.append(xr+xc+'A')
+                if not (r == 3 and nc == 0):
+                    paths.append(xc+xr+'A')
+            else:
+                paths.append(xr+xc+'A')
+            
+        else:
+            r, c = pos2[f]
+            nr, nc = pos2[t]
+            rd, cd = nr - r, nc - c
+            xr, xc = '', ''
+            if rd != 0:
+                xr = rdir[rd//abs(rd)] * abs(rd)
+            if cd != 0:
+                xc = cdir[cd//abs(cd)] * abs(cd)
+            if xr and xc:
+                if not (c == 0 and nr == 0):
+                    paths.append(xr+xc+'A')
+                if not (r == 0 and nc == 0):
+                    paths.append(xc+xr+'A')
+            else:
+                paths.append(xr+xc+'A')
+
+        if robot == 0:
+            return abs(rd) + abs(cd) + 1
+        mincost = float('inf')
+        for path in paths:
+            cost = 0
+            for i in range(len(path)):
+                if i == 0:
+                    cost += dfs('A', path[i], robot-1)
+                else:
+                    cost += dfs(path[i-1], path[i], robot-1)
+
+            mincost = min(mincost, cost)
+        
+        return mincost
+
+    for code in codes:
+        cost = 0
+        for i in range(len(code)):
+            if i == 0:
+                cost += dfs('A', code[i], rcount, True)
+            else:
+                cost += dfs(code[i-1], code[i], rcount, True)
+
+        code = code.rstrip('A')
+        code = code.lstrip('0')
+        res += cost * int(code)
     
-    res = 0
     return res
 
 print(f"First part: {solve()}")
