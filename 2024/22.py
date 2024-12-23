@@ -10,6 +10,22 @@ def solve():
         data = [int(x) for x in file.read().splitlines()]
 
     res = 0
+    for secret in data:
+        k = secret
+        for i in range(2000):
+            k = k ^ (k * 64) % 16777216
+            k = k ^ (k // 32) % 16777216
+            k = k ^ (k * 2048) % 16777216
+        res += secret
+    
+    return res
+
+
+def solve2():
+    with open(filename) as file:
+        data = [int(x) for x in file.read().splitlines()]
+
+    res = 0
     d = [dict() for _ in range(len(data))]
     for j, secret in enumerate(data):
         k = secret
@@ -24,8 +40,6 @@ def solve():
             if len(diff) >= 4 and not tuple(diff[-4:]) in d[j]:
                 d[j][tuple(diff[-4:])] = k % 10
     
-    print('done with diff')
-
     checked = set()
     res = float('-inf')
     for i in range(len(d)):
@@ -41,10 +55,6 @@ def solve():
             
             res = max(res, v)
     return res
-
-
-def solve2():
-    pass
 
 
 print(f"First part: {solve()}")
